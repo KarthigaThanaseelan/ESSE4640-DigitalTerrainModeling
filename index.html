@@ -1,0 +1,103 @@
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1;
+  padding: 20px;
+  font-family: Arial;
+}
+
+/* Center website */
+.main {
+  max-width: 1000px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 50px;
+  word-break: break-all;
+}
+
+.row {
+  margin: 8px -16px;
+}
+
+/* Add padding BETWEEN each column (if you want) */
+.row,
+.row > .column {
+  padding: 8px;
+}
+
+/* Create four equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 25%;
+}
+
+/* Clear floats after rows */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.content {
+  background-color: white;
+  padding: 10px;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 900px) {
+  .column {
+    width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+</style>
+
+<div class="main">
+<h1>Karthiga Thanaseelan</h1>
+<hr>
+<h2>DTM ESSE4640 Portfilio</h2>
+
+
+<!-- <div class="content">
+  <h3>About</h3>
+  <p>Information about me.</p>
+</div> -->
+
+<h3>Assignments</h3>
+<p>Click a link to view assignment info.</p>
+
+<div class="row">
+  <div class="column">
+    <div class="content">
+      <h3>Lab2</h3>
+      <a href="Lab4Esse4640KarthigaThanaseelan.pdf">Report Link</a>
+      <a href="">Code Link</a>
+    </div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <h3>Lab 3</h3>
+    </div>
+  </div>
+  <div class="column">
+    <div class="content">
+      <h3>Lab 4</h3>
+    </div>
+  </div>
+</div>
+
+
+<!-- END MAIN -->
+</div>
