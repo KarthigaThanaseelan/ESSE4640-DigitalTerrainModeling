@@ -1,0 +1,484 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>esse4640lab4</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-11-07"><meta name="DC.source" content="esse4640lab4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">ESSE4640 DTM Lab 4</a></li><li><a href="#2">1. Read Data and Generate a Grid</a></li><li><a href="#3">2. Elevations at the Grid Point Using IDW Method</a></li><li><a href="#4">3. Elevations at the Grid Point Using NN Method</a></li><li><a href="#5">4. Stats</a></li><li><a href="#6">5. Graphs</a></li><li><a href="#7">plot Data Points</a></li><li><a href="#8">Elevation Difference</a></li></ul></div><h2 id="1">ESSE4640 DTM Lab 4</h2><pre class="codeinput">clc
+clear <span class="string">all</span>
+format <span class="string">long</span>
+ele = [];
+ele2 = [];
+ele5 = [];
+elenn = [];
+</pre><h2 id="2">1. Read Data and Generate a Grid</h2><p>read file</p><pre class="codeinput"><span class="comment">%data = xlsread('lab4esse4640');</span>
+<span class="comment">%%Initial (Given) Coordinates</span>
+x = xlsread(<span class="string">'lab4esse4640'</span>,1,<span class="string">'A2:A200'</span>) ;
+y = xlsread(<span class="string">'lab4esse4640'</span>,1,<span class="string">'B2:B200'</span>) ;
+z = xlsread(<span class="string">'lab4esse4640'</span>,1,<span class="string">'C2:C200'</span>) ;
+
+<span class="comment">% Generate a 100m Grid</span>
+LLX=2000; LLY=1000; URX=7000; URY=4000;
+
+xgrd = LLX:100:URX; ygrd = LLY:100:URY;
+
+[Xgrd,Ygrd] = meshgrid(xgrd,ygrd);
+figure(1)
+hold <span class="string">on</span>
+Z0 = Xgrd.*0 + Ygrd.*0;
+surf(Xgrd,Ygrd,Z0);
+scatter(x,y,<span class="string">'R'</span>);
+legend(<span class="string">'Grid'</span>,<span class="string">'Given points'</span>);
+title(<span class="string">'Grid and Data Points'</span>);
+xlabel(<span class="string">'X(m)'</span>);
+ylabel(<span class="string">'Y(m)'</span>);
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="esse4640lab4_01.png" alt=""> <h2 id="3">2. Elevations at the Grid Point Using IDW Method</h2><p>Weights 1/D</p><pre class="codeinput">xgrd_size = size(xgrd) .* size(ygrd)
+<span class="keyword">for</span> i=1:xgrd_size(2)
+    <span class="keyword">for</span> j= 1:size(x)
+        D(j,i) = sqrt((Xgrd(i)-x(j))^2+(Ygrd(i)-y(j))^2);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+d1 = D;
+<span class="keyword">for</span> i=1:xgrd_size(2)
+    <span class="keyword">for</span> counter = 1:15
+        NN = min(d1(:,i));
+        idx = find(d1(:,i) == NN);
+        num(counter,i)=((1/NN)*z(idx));
+        Wgt(counter,i) = (1/NN);
+        d1(idx,i) = 100000000;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i=1:xgrd_size(2)
+    ele(i) = sum(num(:,i))/sum(Wgt(:,i));
+<span class="keyword">end</span>
+
+d2 = D;
+<span class="comment">% Weight 1/D^2</span>
+<span class="keyword">for</span> i=1:xgrd_size(2)
+    <span class="keyword">for</span> counter = 1:15
+        NN = min(d2(:,i));
+        idx = find(d2(:,i) == NN);
+        num2(counter,i)=((1/NN^2)*z(idx));
+        Wgt2(counter,i) = (1/NN^2);
+        d2(idx,i) = 100000000;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i = 1:xgrd_size(2)
+    ele2(i) = sum(num2(:,i))/sum(Wgt2(:,i));
+<span class="keyword">end</span>
+
+d5 = D;
+<span class="comment">% Weight 1/D^5</span>
+<span class="keyword">for</span> i=1:xgrd_size(2)
+    <span class="keyword">for</span> counter = 1:15
+        NN = min(d5(:,i));
+        idx = find(d5(:,i) == NN);
+        num5(counter,i)=((1/NN^5)*z(idx));
+        Wgt5(counter,i) = (1/NN^5);
+        d5(idx,i) = 100000000;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> i = 1:xgrd_size(2)
+    ele5(i) = sum(num5(:,i))/sum(Wgt5(:,i));
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+xgrd_size =
+
+           1        1581
+
+</pre><h2 id="4">3. Elevations at the Grid Point Using NN Method</h2><pre class="codeinput"><span class="keyword">for</span> i = 1:xgrd_size(2)
+    <span class="keyword">for</span> j = 1:15
+
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">for</span> i = 1:xgrd_size(2)
+     <span class="keyword">for</span> j= 1:size(x)
+         Dnn(i,j) = sqrt((Xgrd(i)-x(j))^2+(Ygrd(i)-y(j))^2);
+     <span class="keyword">end</span>
+     NN = min(Dnn(i,:));
+     idx = find(Dnn(i,:) == NN);
+     elenn(i) = z(idx);
+<span class="keyword">end</span>
+</pre><h2 id="5">4. Stats</h2><pre class="codeinput"><span class="keyword">for</span> i = 1:xgrd_size(2)
+     dle1(i) = elenn(i)- ele(i);
+     RMSE1(i) = (elenn(i)- ele(i))^2;
+<span class="keyword">end</span>
+ meanE1= mean(dle1);
+ minE1 = min(dle1);
+ maxE1 = max(dle1);
+ stdeE1 = std(dle1);
+ rmseE1 = sqrt(mean(RMSE1));
+ rangeE1 = range(dle1);
+
+<span class="comment">% NN and 1/D^2</span>
+<span class="keyword">for</span> i = 1:xgrd_size(2)
+     dle2(i) = elenn(i)- ele2(i);
+     RMSE2(i) = (elenn(i)- ele2(i))^2;
+<span class="keyword">end</span>
+ meanE2= mean(dle2);
+ minE2 = min(dle2);
+ maxE2 = max(dle2);
+ stdeE2 = std(dle2);
+ rmseE2 = sqrt(mean(RMSE2));
+ rangeE2 = range(dle2);
+
+<span class="comment">% NN and 1/D^5</span>
+<span class="keyword">for</span> i = 1:xgrd_size(2)
+     dle5(i) = elenn(i)- ele5(i);
+     RMSE5(i) = (elenn(i)- ele5(i))^2;
+<span class="keyword">end</span>
+ meanE5= mean(dle5);
+ minE5 = min(dle5);
+ maxE5 = max(dle5);
+ stdeE5 = std(dle5);
+ rmseE5 = sqrt(mean(RMSE5));
+ rangeE5 = range(dle5);
+</pre><h2 id="6">5. Graphs</h2><pre class="codeinput"><span class="comment">%D1</span>
+figure;
+zgrd=reshape(ele,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,<span class="string">'cubic'</span>);
+<span class="comment">%figure (2)</span>
+mesh(Xgrd,Ygrd,Zgrd);
+title(<span class="string">'Grid DEM (1/d)'</span>)
+xlabel(<span class="string">'x(m)'</span>)
+ylabel(<span class="string">'y(m)'</span>)
+zlabel(<span class="string">'z(m)'</span>)
+colorbar(<span class="string">'southoutside'</span>)
+figure;
+
+<span class="comment">%D2</span>
+zgrd=reshape(ele2,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,<span class="string">'cubic'</span>);
+<span class="comment">%figure (2)</span>
+mesh(Xgrd,Ygrd,Zgrd);
+title(<span class="string">'Grid DEM (1/d^2)'</span>)
+xlabel(<span class="string">'x(m)'</span>)
+ylabel(<span class="string">'y(m)'</span>)
+zlabel(<span class="string">'z(m)'</span>)
+colorbar(<span class="string">'southoutside'</span>)
+figure;
+
+<span class="comment">%D5</span>
+zgrd=reshape(ele5,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,<span class="string">'cubic'</span>);
+<span class="comment">%figure (2)</span>
+mesh(Xgrd,Ygrd,Zgrd);
+title(<span class="string">'Grid DEM (1/d^5)'</span>)
+xlabel(<span class="string">'x(m)'</span>)
+ylabel(<span class="string">'y(m)'</span>)
+zlabel(<span class="string">'z(m)'</span>)
+colorbar(<span class="string">'southoutside'</span>)
+figure;
+
+<span class="comment">%NN</span>
+zgrd=reshape(elenn,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,<span class="string">'cubic'</span>);
+<span class="comment">%figure (2)</span>
+mesh(Xgrd,Ygrd,Zgrd);
+title(<span class="string">'Grid DEM (NN Interpolation)'</span>)
+xlabel(<span class="string">'x(m)'</span>)
+ylabel(<span class="string">'y(m)'</span>)
+zlabel(<span class="string">'z(m)'</span>)
+colorbar(<span class="string">'southoutside'</span>)
+figure;
+</pre><img vspace="5" hspace="5" src="esse4640lab4_02.png" alt=""> <img vspace="5" hspace="5" src="esse4640lab4_03.png" alt=""> <img vspace="5" hspace="5" src="esse4640lab4_04.png" alt=""> <img vspace="5" hspace="5" src="esse4640lab4_05.png" alt=""> <img vspace="5" hspace="5" src="esse4640lab4_06.png" alt=""> <h2 id="7">plot Data Points</h2><pre class="codeinput">Zgrd = griddata(x,y,z,Xgrd,Ygrd,<span class="string">'cubic'</span>);
+mesh(Xgrd,Ygrd,Zgrd);
+title(<span class="string">'Data Point Elevation'</span>)
+xlabel(<span class="string">'x(m)'</span>)
+ylabel(<span class="string">'y(m)'</span>)
+zlabel(<span class="string">'z(m)'</span>)
+colorbar(<span class="string">'southoutside'</span>)
+figure;
+</pre><img vspace="5" hspace="5" src="esse4640lab4_07.png" alt=""> <img vspace="5" hspace="5" src="esse4640lab4_08.png" alt=""> <h2 id="8">Elevation Difference</h2><pre class="codeinput"><span class="keyword">for</span> i = 1:1581
+    index(i) = i;
+<span class="keyword">end</span>
+plot(index,(ele-elenn))
+hold <span class="string">on</span>
+plot(index,(ele2-elenn))
+plot(index,(ele5-elenn))
+title(<span class="string">'Elevation Differences'</span>)
+xlabel(<span class="string">'Index'</span>)
+ylabel(<span class="string">'Elevation'</span>)
+legend(<span class="string">'NN &amp; 1/d'</span>, <span class="string">'NN &amp; 1/d^2'</span>,<span class="string">'NN &amp; 1/d^5'</span>)
+</pre><img vspace="5" hspace="5" src="esse4640lab4_09.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% ESSE4640 DTM Lab 4 
+clc
+clear all
+format long
+ele = [];
+ele2 = [];
+ele5 = [];
+elenn = [];
+
+%% 1. Read Data and Generate a Grid
+% read file
+%data = xlsread('lab4esse4640');
+%%Initial (Given) Coordinates
+x = xlsread('lab4esse4640',1,'A2:A200') ;
+y = xlsread('lab4esse4640',1,'B2:B200') ;
+z = xlsread('lab4esse4640',1,'C2:C200') ;
+
+% Generate a 100m Grid
+LLX=2000; LLY=1000; URX=7000; URY=4000;
+
+xgrd = LLX:100:URX; ygrd = LLY:100:URY;
+
+[Xgrd,Ygrd] = meshgrid(xgrd,ygrd);
+figure(1)
+hold on
+Z0 = Xgrd.*0 + Ygrd.*0;
+surf(Xgrd,Ygrd,Z0);
+scatter(x,y,'R');
+legend('Grid','Given points');
+title('Grid and Data Points');
+xlabel('X(m)');
+ylabel('Y(m)');
+hold off
+
+%% 2. Elevations at the Grid Point Using IDW Method 
+% Weights
+% 1/D
+xgrd_size = size(xgrd) .* size(ygrd)
+for i=1:xgrd_size(2)
+    for j= 1:size(x)
+        D(j,i) = sqrt((Xgrd(i)-x(j))^2+(Ygrd(i)-y(j))^2);
+    end
+end
+d1 = D;
+for i=1:xgrd_size(2)
+    for counter = 1:15
+        NN = min(d1(:,i));
+        idx = find(d1(:,i) == NN);
+        num(counter,i)=((1/NN)*z(idx));
+        Wgt(counter,i) = (1/NN);
+        d1(idx,i) = 100000000;
+    end
+end
+
+for i=1:xgrd_size(2)
+    ele(i) = sum(num(:,i))/sum(Wgt(:,i));
+end
+
+d2 = D;
+% Weight 1/D^2
+for i=1:xgrd_size(2)
+    for counter = 1:15
+        NN = min(d2(:,i));
+        idx = find(d2(:,i) == NN);
+        num2(counter,i)=((1/NN^2)*z(idx));
+        Wgt2(counter,i) = (1/NN^2);
+        d2(idx,i) = 100000000;
+    end
+end
+
+for i = 1:xgrd_size(2)
+    ele2(i) = sum(num2(:,i))/sum(Wgt2(:,i));
+end
+
+d5 = D;
+% Weight 1/D^5
+for i=1:xgrd_size(2)
+    for counter = 1:15
+        NN = min(d5(:,i));
+        idx = find(d5(:,i) == NN);
+        num5(counter,i)=((1/NN^5)*z(idx));
+        Wgt5(counter,i) = (1/NN^5);
+        d5(idx,i) = 100000000;
+    end
+end
+
+for i = 1:xgrd_size(2)
+    ele5(i) = sum(num5(:,i))/sum(Wgt5(:,i));
+end
+
+%% 3. Elevations at the Grid Point Using NN Method 
+for i = 1:xgrd_size(2)
+    for j = 1:15
+        
+    end
+end
+for i = 1:xgrd_size(2)
+     for j= 1:size(x)
+         Dnn(i,j) = sqrt((Xgrd(i)-x(j))^2+(Ygrd(i)-y(j))^2);
+     end
+     NN = min(Dnn(i,:));
+     idx = find(Dnn(i,:) == NN);
+     elenn(i) = z(idx);
+end
+
+%% 4. Stats
+for i = 1:xgrd_size(2) 
+     dle1(i) = elenn(i)- ele(i);
+     RMSE1(i) = (elenn(i)- ele(i))^2;
+end
+ meanE1= mean(dle1);
+ minE1 = min(dle1);
+ maxE1 = max(dle1);
+ stdeE1 = std(dle1);
+ rmseE1 = sqrt(mean(RMSE1));
+ rangeE1 = range(dle1);
+
+% NN and 1/D^2
+for i = 1:xgrd_size(2)  
+     dle2(i) = elenn(i)- ele2(i);
+     RMSE2(i) = (elenn(i)- ele2(i))^2;
+end
+ meanE2= mean(dle2);
+ minE2 = min(dle2);
+ maxE2 = max(dle2);
+ stdeE2 = std(dle2);
+ rmseE2 = sqrt(mean(RMSE2));
+ rangeE2 = range(dle2);
+
+% NN and 1/D^5
+for i = 1:xgrd_size(2)  
+     dle5(i) = elenn(i)- ele5(i);
+     RMSE5(i) = (elenn(i)- ele5(i))^2;
+end
+ meanE5= mean(dle5);
+ minE5 = min(dle5);
+ maxE5 = max(dle5);
+ stdeE5 = std(dle5);
+ rmseE5 = sqrt(mean(RMSE5));
+ rangeE5 = range(dle5);
+
+
+%% 5. Graphs
+%D1
+figure;
+zgrd=reshape(ele,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,'cubic');
+%figure (2)
+mesh(Xgrd,Ygrd,Zgrd);
+title('Grid DEM (1/d)')
+xlabel('x(m)')
+ylabel('y(m)')
+zlabel('z(m)')
+colorbar('southoutside')
+figure;
+
+%D2
+zgrd=reshape(ele2,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,'cubic');
+%figure (2)
+mesh(Xgrd,Ygrd,Zgrd);
+title('Grid DEM (1/d^2)')
+xlabel('x(m)')
+ylabel('y(m)')
+zlabel('z(m)')
+colorbar('southoutside')
+figure;
+
+%D5
+zgrd=reshape(ele5,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,'cubic');
+%figure (2)
+mesh(Xgrd,Ygrd,Zgrd);
+title('Grid DEM (1/d^5)')
+xlabel('x(m)')
+ylabel('y(m)')
+zlabel('z(m)')
+colorbar('southoutside')
+figure;
+
+%NN
+zgrd=reshape(elenn,51,31).';
+Zgrd = griddata(xgrd,ygrd,zgrd,Xgrd,Ygrd,'cubic');
+%figure (2)
+mesh(Xgrd,Ygrd,Zgrd);
+title('Grid DEM (NN Interpolation)')
+xlabel('x(m)')
+ylabel('y(m)')
+zlabel('z(m)')
+colorbar('southoutside')
+figure;
+%% plot Data Points
+Zgrd = griddata(x,y,z,Xgrd,Ygrd,'cubic');
+mesh(Xgrd,Ygrd,Zgrd);
+title('Data Point Elevation')
+xlabel('x(m)')
+ylabel('y(m)')
+zlabel('z(m)')
+colorbar('southoutside')
+figure;
+%% Elevation Difference
+for i = 1:1581
+    index(i) = i;
+end    
+plot(index,(ele-elenn))
+hold on
+plot(index,(ele2-elenn))
+plot(index,(ele5-elenn))
+title('Elevation Differences')
+xlabel('Index')
+ylabel('Elevation')
+legend('NN & 1/d', 'NN & 1/d^2','NN & 1/d^5')
+##### SOURCE END #####
+--></body></html>
