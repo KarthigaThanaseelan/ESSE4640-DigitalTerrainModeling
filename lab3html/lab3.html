@@ -1,0 +1,1459 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>lab3</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-11-15"><meta name="DC.source" content="lab3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">ESSE4640 DTM Lab 3</a></li><li><a href="#2">Read Data</a></li><li><a href="#3">Generate 2nd and 3rd order trend surfaces</a></li><li><a href="#4">Normalized First Order Polynomial Equation</a></li><li><a href="#5">Centroid First Order Polynomial Equation</a></li><li><a href="#6">Second Order Polynomial Equation</a></li><li><a href="#7">Normalized Second Order Polynomial Equation</a></li><li><a href="#8">Centroid Second   Order Polynomial Equation</a></li><li><a href="#9">Third Order Polynomial Equation</a></li><li><a href="#10">Normalized Third Order Polynomial Equation</a></li><li><a href="#11">Centroid Third Order Polynomial Equation</a></li><li><a href="#12">Estimate Accuracy</a></li><li><a href="#13">Elevations and Residuals</a></li><li><a href="#14">Elevation</a></li><li><a href="#15">Visualize 1</a></li><li><a href="#16">Visualize 2</a></li><li><a href="#17">Visualize 3</a></li><li><a href="#18">Visualize 4</a></li><li><a href="#19">Adjustment</a></li></ul></div><h2 id="1">ESSE4640 DTM Lab 3</h2><pre class="codeinput">clc
+clear <span class="string">all</span>
+</pre><h2 id="2">Read Data</h2><p>read file</p><pre class="codeinput">data = xlsread(<span class="string">'lab3esse4640'</span>);
+<span class="comment">%%Initial (Given) Coordinates</span>
+xi = data(:,1);
+yi = data(:,2);
+zi = data(:,3);
+</pre><h2 id="3">Generate 2nd and 3rd order trend surfaces</h2><p>Initial coeffiecnt values</p><pre class="codeinput">n = 92;
+x = sum(xi);
+y = sum(yi);
+z = sum(zi);
+<span class="comment">% Estimating the corresponding polynomial coefficient</span>
+X = xi;
+Y = yi;
+Z = zi;
+xy = xi.* yi;
+xz = xi.* zi;
+yz = yi.* zi;
+<span class="keyword">for</span> i = 2 : 8
+    X(:,i) = x.^i;
+    Y(:,i) = y.^i;
+<span class="keyword">end</span>
+<span class="keyword">for</span> i = 1 : 8
+    SumX(i) = sum(X(:,i));
+    SumY(i) = sum(Y(:,i));
+<span class="keyword">end</span>
+xySum = sum(xy);
+xzSum = sum(xz);
+yzSum = sum(yz);
+
+<span class="comment">% Estimate using the normalized coordinates</span>
+Xmx = max(xi); Xmn = min(xi);
+Ymx = max(yi); Ymn = min(yi);
+Zmx = max(zi); Zmn = min(zi);
+
+Xn = (xi-Xmn)/(Xmx-Xmn);
+Yn = (yi-Xmn)/(Ymx-Ymn);
+SumZn(:,1) = (zi-Xmn)/(Zmx-Zmn);
+xyn = Xn.* Yn;
+xzn = Xn.* SumZn(:,1);
+yzn = Yn.* SumZn(:,1);
+<span class="keyword">for</span> i = 2 : 8
+    Xn(:,i) = Xn(i,1).^i;
+    Yn(:,i) = Yn(i,1).^i;
+<span class="keyword">end</span>
+<span class="keyword">for</span> i = 1 : 8
+    SumXn(i) = sum(Xn(:,i));
+    SumYn(i) = sum(Yn(:,i));
+<span class="keyword">end</span>
+xynSum = sum(xyn);
+xznSum = sum(xzn);
+yznSum = sum(yzn);
+SumZn = sum(SumZn(:,1));
+
+<span class="comment">% Estimate using the centroid coordinates</span>
+Xcent = xi/n;
+Ycent = yi/n;
+Zcent = zi/n;
+SumXcent = sum(Xcent);
+SumYcent = sum(Ycent);
+
+<span class="keyword">for</span> i = 2 : 8
+    Xcent(:,i) = x.^i;
+    Ycent(:,i) = y.^i;
+<span class="keyword">end</span>
+
+xycent = xi.* yi;
+xzcent = xi.* zi;
+yzcent = yi.* zi;
+
+<span class="keyword">for</span> i = 1 : 8
+    SumXcent(i) = sum(Xcent(:,i));
+    SumYcent(i) = sum(Ycent(:,i));
+<span class="keyword">end</span>
+xycentSum = sum(xycent);
+xzcentSum = sum(xzcent);
+yzcentSum = sum(yzcent);
+SumZcent = sum(zi);
+</pre><h2 id="4">Normalized First Order Polynomial Equation</h2><p>Design Matrix</p><pre class="codeinput">An = [n   SumXn(:,1)      SumYn(:,1);
+     SumXn(:,1) SumXn(2) xynSum;
+     SumYn(:,1)  xynSum  SumYn(2)];
+Zon = [SumZn xznSum yznSum];
+con = An/Zon
+condn = abs (max(con)/min(con))
+</pre><pre class="codeoutput">
+con =
+
+   -0.0187
+   -0.0127
+    0.0001
+
+
+condn =
+
+    0.0040
+
+</pre><h2 id="5">Centroid First Order Polynomial Equation</h2><p>Design Matrix</p><pre class="codeinput">Acent = [n     SumXcent(:,1)       SumYcent(:,1);
+         SumXcent(:,1)  SumXcent(2) xycentSum;
+         SumYcent(:,1)  xycentSum  SumYcent(2)];
+Zocent = [SumZcent xzcentSum yzcentSum];
+cocent = Acent/Zocent
+condcent = abs (max(cocent/min(cocent)));
+</pre><pre class="codeoutput">
+cocent =
+
+   1.0e+05 *
+
+    0.0000
+    1.9231
+    0.2978
+
+</pre><h2 id="6">Second Order Polynomial Equation</h2><p>Design Matrix</p><pre class="codeinput">A2 = [n         x           y           SumX(2)         xySum           SumY(2);
+      x         SumX(2)     xySum       SumX(3)         SumX(2)*y       SumY(2)*x;
+      y         xySum       SumY(2)     SumX(2)*y       SumY(2)*x       SumY(3);
+   SumX(2)      SumX(3)     SumX(2)*y   SumX(4)         SumX(3)*y       SumX(2)*SumY(2);
+   xySum        SumX(2)*y   SumY(2)*x   SumX(3)*y       SumX(2)*SumY(2) SumY(3)*x;
+   SumY(2)      SumY(2)*x   SumY(3)     SumX(2)*SumY(2) SumY(3)*x       SumY(4)];
+
+Zo2 = [z z*x z*y SumX(2)*z  xySum*z SumY(2)*z];
+co2 = A2/Zo2;
+cond2 = abs (max(co2)/min(co2));
+</pre><h2 id="7">Normalized Second Order Polynomial Equation</h2><p>Design Matrix</p><pre class="codeinput">An2 = [n    SumXn(:,1)    SumYn(:,1)       SumXn(2)     xynSum      SumYn(2);
+      SumXn(:,1)   SumXn(2) xynSum    SumXn(3)    SumXn(2)*SumYn(:,1)    SumY(2)*SumXn(:,1);
+      SumYn(:,1)    xynSum  SumYn(2) SumXn(2)*SumYn(:,1)   SumY(2)*SumXn(:,1)    SumYn(3);
+   SumXn(2) SumXn(3) SumXn(2)*SumYn(:,1) SumXn(4) SumXn(3)*SumYn(:,1)  SumXn(2)*SumYn(2);
+   xynSum   SumXn(2)*SumYn(:,1)  SumYn(2)*SumXn(:,1) SumXn(3)*SumYn(:,1) SumXn(2)*SumYn(2) SumYn(3)*SumXn(:,1);
+   SumYn(2) SumYn(2)*SumXn(:,1)  SumYn(3) SumXn(2)*SumYn(2) SumYn(3)*SumXn(:,1) SumYn(4)];
+Zon2 = [SumZn(:,1) SumZn(:,1)*SumXn(:,1) SumZn(:,1)*SumYn(:,1) SumXn(2)*SumZn(:,1)  xynSum*SumZn(:,1) SumYn(2)*SumZn(:,1)];
+con2 = An2/Zon2;
+condn2 = abs (max(con2)/min(con2));
+</pre><h2 id="8">Centroid Second   Order Polynomial Equation</h2><p>Design Matrix</p><pre class="codeinput">Acent2 = [n             SumXcent(:,1)               SumYcent(:,1)               SumXcent(2)                 xycentSum                   SumYcent(2);
+         SumXcent(:,1)  SumXcent(2)                 xycentSum                   SumXcent(3)                 SumXcent(2)*SumYcent(:,1)   SumYcent(2)*SumXn(:,1);
+         SumYcent(:,1)  xycentSum                   SumYcent(2)                 SumXcent(2)*SumYcent(:,1)   SumYcent(2)*SumXcent(:,1)   SumYcent(3);
+         SumXcent(2)    SumXcent(3)                 SumXcent(2)*SumYcent(:,1)   SumXcent(4)                 SumXcent(3)*SumYcent(:,1)   SumXcent(2)*SumYcent(2);
+         xycentSum      SumXcent(2)*SumYcent(:,1)   SumYcent(2)*SumXcent(:,1)   SumXcent(3)*SumYcent(:,1)   SumXcent(2)*SumYcent(2)     SumYcent(3)*SumXcent(:,1);
+         SumYcent(2)    SumYcent(2)*SumXcent(:,1)   SumYcent(3)                 SumXcent(2)*SumYcent(2)     SumYcent(3)*SumXcent(:,1)   SumYcent(4)];
+
+Zocent2 = [SumZcent(:,1) SumZcent(:,1)*SumXcent(:,1) SumZcent(:,1)*SumYcent(:,1) SumXcent(2)*SumZcent(:,1)  xycentSum*SumZcent(:,1) SumYcent(2)*SumZcent(:,1)];
+cocent2 = Acent2/Zocent2
+condcent2 = abs (max(cocent2/min(cocent2)));
+</pre><pre class="codeoutput">
+cocent2 =
+
+   1.0e+08 *
+
+    0.0000
+    0.0000
+    0.0000
+    1.4990
+    0.0014
+    4.6213
+
+</pre><h2 id="9">Third Order Polynomial Equation</h2><pre class="codeinput"><span class="comment">%Design Matrix</span>
+A3 = [ n           x               y               SumX(2)              xySum          SumY(2)          SumX(3)          SumX(2)*y        x*SumY(2)        SumY(3);
+        x           SumX(2)          xySum          SumX(3)              SumX(2)*y        x*SumY(2)        SumX(4)          SumX(3)*y        SumX(2)*SumY(2)   x*SumY(3) ;
+        y           xySum          SumY(2)          SumX(2)*y            x*SumY(2)        SumY(3)          SumX(3)*y        SumX(2)*SumY(2)   x*SumY(3)        SumY(4) ;
+        SumX(2)      SumX(3)          SumX(2)*y        SumX(4)              SumX(3)*y        SumX(2)*SumY(2)   SumX(5)          SumX(4)*y        SumX(3)*SumY(2)   SumX(2)*SumY(3) ;
+        xySum      SumX(2)*y        x*SumY(2)        SumX(3)*y            SumX(2)*SumY(2)   x*SumY(3)        SumX(4)*y        SumX(3)*SumY(2)   SumX(2)*SumY(3)   x*SumY(4);
+        SumY(2)      x*SumY(2)        SumY(3)          SumX(2)*SumY(2)       x*SumY(3)        SumY(4)          SumX(3)*SumY(2)   SumX(2)*SumY(3)   x*SumY(4)        SumY(5);
+        SumX(3)      SumX(4)          SumX(3)*y        SumX(5)              SumX(4)*y        SumX(3)*SumY(2)   SumX(6)          SumX(5)*y        SumX(4)*SumY(2)   SumX(3)*SumY(3);
+        SumX(2)*y    SumX(3)*SumY(2)   SumX(2)*SumY(2)   SumX(4)*y            SumX(3)*SumY(2)   SumX(2)*SumY(3)   SumX(5)*y        SumX(4)*SumY(2)   SumX(3)*SumY(3)   SumX(2)*SumY(4);
+        x*SumY(2)    SumX(2)*SumY(2)   x*SumY(3)        SumX(3)*SumY(2)       SumX(2)*SumY(3)   x*SumY(4)        SumX(4)*SumY(2)   SumX(3)*SumY(3)   SumX(2)*SumY(4)   x*SumY(5);
+        SumY(3)      x*SumY(3)        SumY(4)          SumX(2)*SumY(3)       x*SumY(4)        SumY(5)          SumX(3)*SumY(3)   SumX(2)*SumY(4)   x*SumY(5)        SumY(6)];
+Zo3 = [z z*x y*z SumX(2)*z xySum*z SumY(2)*z SumX(3)*z SumX(2)*y*z x*SumY(2)*z SumY(3)*z];
+co3 = A3/Zo3;
+cond3 = abs(max(co3)/min(co3));
+</pre><h2 id="10">Normalized Third Order Polynomial Equation</h2><pre class="codeinput"><span class="comment">%Design Matrix</span>
+An3 = [ n           SumXn(:,1)               SumYn(:,1)               SumXn(2)              xynSum          SumYn(2)          SumXn(3)          SumXn(2)*SumYn(:,1)        SumXn(:,1)*SumYn(2)        SumYn(3);
+        SumXn(:,1)           SumXn(2)          xynSum          SumXn(3)              SumXn(2)*SumYn(:,1)        SumXn(:,1)*SumYn(2)        SumXn(4)          SumXn(3)*SumYn(:,1)        SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3) ;
+        SumYn(:,1)           xynSum          SumYn(2)          SumXn(2)*SumYn(:,1)            SumXn(:,1)*SumYn(2)        SumYn(3)          SumXn(3)*SumYn(:,1)        SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3)        SumYn(4) ;
+        SumXn(2)      SumXn(3)          SumXn(2)*SumYn(:,1)        SumXn(4)              SumXn(3)*SumYn(:,1)        SumXn(2)*SumYn(2)   SumXn(5)          SumXn(4)*SumYn(:,1)        SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3) ;
+        xynSum      SumXn(2)*SumYn(:,1)        SumXn(:,1)*SumYn(2)        SumXn(3)*SumYn(:,1)            SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3)        SumXn(4)*SumYn(:,1)        SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3)   SumXn(:,1)*SumYn(4);
+        SumYn(2)      SumXn(:,1)*SumYn(2)        SumYn(3)          SumXn(2)*SumYn(2)       SumXn(:,1)*SumYn(3)        SumYn(4)          SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3)   SumXn(:,1)*SumYn(4)        SumYn(5);
+        SumXn(3)      SumXn(4)          SumXn(3)*SumYn(:,1)        SumXn(5)              SumXn(4)*SumYn(:,1)        SumXn(3)*SumYn(2)   SumXn(6)          SumXn(5)*SumYn(:,1)        SumXn(4)*SumYn(2)   SumXn(3)*SumYn(3);
+        SumXn(2)*SumYn(:,1)    SumXn(3)*SumYn(2)   SumXn(2)*SumYn(2)   SumXn(4)*SumYn(:,1)            SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3)   SumXn(5)*SumYn(:,1)        SumXn(4)*SumYn(2)   SumXn(3)*SumYn(3)   SumXn(2)*SumYn(4);
+        SumXn(:,1)*SumYn(2)    SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3)        SumXn(3)*SumYn(2)       SumXn(2)*SumYn(3)   SumXn(:,1)*SumYn(4)        SumXn(4)*SumYn(2)   SumXn(3)*SumYn(3)   SumXn(2)*SumYn(4)   SumXn(:,1)*SumYn(5);
+        SumYn(3)      SumXn(:,1)*SumYn(3)        SumYn(4)          SumXn(2)*SumYn(3)       SumXn(:,1)*SumYn(4)        SumYn(5)          SumXn(3)*SumYn(3)   SumXn(2)*SumYn(4)   SumXn(:,1)*SumYn(5)        SumYn(6)];
+Zon3 = [SumZn(:,1) SumZn(:,1)*SumXn(:,1) SumYn(:,1)*SumZn(:,1) SumXn(2)*SumZn(:,1) xynSum*SumZn(:,1) SumYn(2)*SumZn(:,1) SumXn(3)*SumZn(:,1) SumXn(2)*SumYn(:,1)*SumZn(:,1) SumXn(:,1)*SumYn(2)*SumZn(:,1) SumYn(3)*SumZn(:,1)];
+con3 = An3/Zon3;
+condn3 = abs(max(con3)/min(con3));
+</pre><h2 id="11">Centroid Third Order Polynomial Equation</h2><pre class="codeinput"><span class="comment">%Design Matrix</span>
+Acent3 = [ n           SumXcent(:,1)               SumYcent(:,1)               SumXcent(2)              xycentSum          SumYcent(2)          SumXcent(3)          SumXcent(2)*SumYcent(:,1)        SumXcent(:,1)*SumYcent(2)        SumYcent(3);
+        SumXcent(:,1)           SumXcent(2)          xycentSum          SumXcent(3)              SumXcent(2)*SumYcent(:,1)        SumXcent(:,1)*SumYcent(2)        SumXcent(4)          SumXcent(3)*SumYcent(:,1)        SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3) ;
+        SumYcent(:,1)           xycentSum          SumYcent(2)          SumXcent(2)*SumYcent(:,1)            SumXcent(:,1)*SumYcent(2)        SumYcent(3)          SumXcent(3)*SumYcent(:,1)        SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3)        SumYcent(4) ;
+        SumXcent(2)      SumXcent(3)          SumXcent(2)*SumYcent(:,1)        SumXcent(4)              SumXcent(3)*SumYcent(:,1)        SumXcent(2)*SumYcent(2)   SumXcent(5)          SumXcent(4)*SumYcent(:,1)        SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3) ;
+        xycentSum      SumXcent(2)*SumYcent(:,1)        SumXcent(:,1)*SumYcent(2)        SumXcent(3)*SumYcent(:,1)            SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3)        SumXcent(4)*SumYcent(:,1)        SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3)   SumXcent(:,1)*SumYcent(4);
+        SumYcent(2)      SumXcent(:,1)*SumYcent(2)        SumYcent(3)          SumXcent(2)*SumYcent(2)       SumXcent(:,1)*SumYcent(3)        SumYcent(4)          SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3)   SumXcent(:,1)*SumYcent(4)        SumYcent(5);
+        SumXcent(3)      SumXcent(4)          SumXcent(3)*SumYcent(:,1)        SumXcent(5)              SumXcent(4)*SumYcent(:,1)        SumXcent(3)*SumYcent(2)   SumXcent(6)          SumXcent(5)*SumYcent(:,1)        SumXcent(4)*SumYcent(2)   SumXcent(3)*SumYcent(3);
+        SumXcent(2)*SumYcent(:,1)    SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(2)   SumXcent(4)*SumYcent(:,1)            SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3)   SumXcent(5)*SumYcent(:,1)        SumXcent(4)*SumYcent(2)   SumXcent(3)*SumYcent(3)   SumXcent(2)*SumYcent(4);
+        SumXcent(:,1)*SumYcent(2)    SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3)        SumXcent(3)*SumYcent(2)       SumXcent(2)*SumYcent(3)   SumXcent(:,1)*SumYcent(4)        SumXcent(4)*SumYcent(2)   SumXcent(3)*SumYcent(3)   SumXcent(2)*SumYcent(4)   SumXcent(:,1)*SumYcent(5);
+        SumYcent(3)      SumXcent(:,1)*SumYcent(3)        SumYcent(4)          SumXcent(2)*SumYcent(3)       SumXcent(:,1)*SumYcent(4)        SumYcent(5)          SumXcent(3)*SumYcent(3)   SumXcent(2)*SumYcent(4)   SumXcent(:,1)*SumYcent(5)        SumYcent(6)];
+Zocent3 = [SumZcent(:,1) SumZcent(:,1)*SumXcent(:,1) SumYcent(:,1)*SumZcent(:,1) SumXcent(2)*SumZcent(:,1) xycentSum*SumZcent(:,1) SumYcent(2)*SumZcent(:,1) SumXcent(3)*SumZcent(:,1) SumXcent(2)*SumYcent(:,1)*SumZcent(:,1) SumXcent(:,1)*SumYcent(2)*SumZcent(:,1) SumYcent(3)*SumZcent(:,1)];
+cocent3 = Acent3/Zocent3;
+condcent3 = abs(max(cocent3)/min(cocent3));
+
+
+<span class="comment">%Second order Design Matrix</span>
+<span class="keyword">for</span> i=1:1:92
+    A2(i,1) = (1);
+    A2(i,2) = xi(i);
+    A2(i,3) = yi(i);
+    A2(i,4)= xi(i)^2;
+    A2(i,5) = xi(i)*yi(i);
+    A2(i,6)= yi(i)^2;
+<span class="keyword">end</span>
+[X2, L2, R2, apost2] = LnrPrmtrcLSA(zi,A2)
+
+<span class="comment">%Third Order Design Matrix</span>
+<span class="keyword">for</span> i=1:1:92
+    A3(i,1) = (1);
+    A3(i,2) = xi(i);
+    A3(i,3) = yi(i);
+    A3(i,4)= xi(i)^2;
+    A3(i,5) = xi(i)*yi(i);
+    A3(i,6)= yi(i)^2;
+    A3(i,7)= xi(i)^3;
+    A3(i,8)= xi(i)^2*yi(i);
+    A3(i,9)= yi(i)^2*xi(i);
+    A3(i,10)= yi(i)^3;
+<span class="keyword">end</span>
+[X3, L3, R3, apost3] = LnrPrmtrcLSA(zi,A3)
+</pre><h2 id="12">Estimate Accuracy</h2><pre class="codeinput">apost2; apost3;
+</pre><h2 id="13">Elevations and Residuals</h2><pre class="codeinput"><span class="comment">%%Second order</span>
+<span class="keyword">for</span> i=1:1:92
+    A2(i,1) = (1);
+    A2(i,2) = xi(i);
+    A2(i,3) = yi(i);
+    A2(i,4)= xi(i)^2;
+    A2(i,5) = xi(i)*yi(i);
+    A2(i,6)= yi(i)^2;
+<span class="keyword">end</span>
+p1 = inv(transpose(A2)*A2);
+p2 = transpose(A2);
+Xhat2 = A2*p1*p2*zi;
+
+
+<span class="comment">%Second Order</span>
+Mean_R2 = mean(R2)
+Max_R2 = max(R2)
+Min_R2 = min(R2)
+STD_R2 = std (R2)
+RMSE_R2 = sqrt(mean(((zi-Xhat2).^2)))
+
+<span class="comment">%%Third Order</span>
+<span class="keyword">for</span> i=1:1:92
+    A3(i,1) = (1);
+    A3(i,2) = xi(i);
+    A3(i,3) = yi(i);
+    A3(i,4)= xi(i)^2;
+    A3(i,5) = xi(i)*yi(i);
+    A3(i,6)= yi(i)^2;
+    A3(i,7)= xi(i)^3;
+    A3(i,8)= xi(i)^2*yi(i);
+    A3(i,9)= yi(i)^2*xi(i);
+    A3(i,10)= yi(i)^3;
+<span class="keyword">end</span>
+Xhat3 = A3*inv(transpose(A3)*A3)*transpose(A3)*zi;
+
+<span class="comment">%Third Order</span>
+Mean_R3 = mean(R3)
+Max_R3 = max(R3)
+Min_R3 = min(R3)
+STD_R3 = std (R3)
+RMSE_R3 = sqrt(mean(((zi-Xhat3).^2)))
+
+<span class="comment">% Worthiness</span>
+<span class="comment">%%Second Order</span>
+avg_Z = mean(zi);
+<span class="keyword">for</span> i=1:1:92
+SST_or2(i) = sum((zi(i)-avg_Z)^2);
+SSR_or2(i) = sum ((Xhat2(i)-avg_Z)^2);
+SSD_or2(i) = sum((zi(i)-Xhat2(i))^2);
+<span class="keyword">end</span>
+SST_o2 = sum(SST_or2)
+SSR_o2 = sum(SSR_or2)
+SSD_o2 = sum(SSD_or2)
+<span class="comment">%Goodness-of-Fit</span>
+R2 = SSR_o2/SST_o2
+nn = 92
+m = 6
+MST_o2 = SST_o2 / nn
+MSR_o2 = SSR_o2 / m
+MSD_o2 = SSD_o2 / (n-m)
+<span class="comment">% Fstat</span>
+F2_test = MSR_o2/MSD_o2
+<span class="comment">%%Third Order</span>
+<span class="keyword">for</span> i=1:1:92
+SST_or3(i) = sum((zi(i)-avg_Z)^2);
+SSR_or3(i) = sum ((Xhat3(i)-avg_Z)^2);
+SSD_or3(i) = sum((zi(i)-Xhat3(i))^2);
+<span class="keyword">end</span>
+SST_o3 = sum(SST_or3)
+SSR_o3 = sum(SSR_or3)
+SSD_o3 = sum(SSD_or3)
+<span class="comment">% of Goodness-of-Fit</span>
+R3 = SSR_o3/SST_o3
+n_3 = 92
+m_3 = 10
+MST_o3 = SST_o3 / n_3
+MSR_o3 = SSR_o3 / m_3
+MSD_o3 = SSD_o3 / (n_3-m_3)
+<span class="comment">% Fstat</span>
+F3_test = MSR_o3/MSD_o3
+</pre><pre class="codeoutput">Warning: Matrix is close to singular or badly scaled. Results may be inaccurate.
+RCOND =  2.633543e-19. 
+
+Mean_R2 =
+
+   3.9809e-12
+
+
+Max_R2 =
+
+   25.9480
+
+
+Min_R2 =
+
+  -27.2911
+
+
+STD_R2 =
+
+    8.6809
+
+
+RMSE_R2 =
+
+    8.6336
+
+Warning: Matrix is close to singular or badly scaled. Results may be inaccurate.
+RCOND =  1.642374e-28. 
+
+Mean_R3 =
+
+   2.4209e-09
+
+
+Max_R3 =
+
+   25.6089
+
+
+Min_R3 =
+
+  -27.5121
+
+
+STD_R3 =
+
+    8.6068
+
+
+RMSE_R3 =
+
+    8.5599
+
+
+SST_o2 =
+
+   8.8452e+03
+
+
+SSR_o2 =
+
+   1.9877e+03
+
+
+SSD_o2 =
+
+   6.8576e+03
+
+
+R2 =
+
+    0.2247
+
+
+nn =
+
+    92
+
+
+m =
+
+     6
+
+
+MST_o2 =
+
+   96.1439
+
+
+MSR_o2 =
+
+  331.2752
+
+
+MSD_o2 =
+
+   79.7394
+
+
+F2_test =
+
+    4.1545
+
+
+SST_o3 =
+
+   8.8452e+03
+
+
+SSR_o3 =
+
+   2.1043e+03
+
+
+SSD_o3 =
+
+   6.7410e+03
+
+
+R3 =
+
+    0.2379
+
+
+n_3 =
+
+    92
+
+
+m_3 =
+
+    10
+
+
+MST_o3 =
+
+   96.1439
+
+
+MSR_o3 =
+
+  210.4284
+
+
+MSD_o3 =
+
+   82.2067
+
+
+F3_test =
+
+    2.5597
+
+</pre><h2 id="14">Elevation</h2><pre class="codeinput">point = [<span class="string">'A'</span>,<span class="string">'B'</span>,<span class="string">'C'</span>];
+x_elevLoc = [7000, 6350, 8800];
+y_elevLoc = [3500, 5500, 2400];
+<span class="keyword">for</span> i = 1:3
+    point(i)
+    elev_2(i) = cocent2(1)+(cocent2(2)*x_elevLoc(i)) + (cocent2(3)*y_elevLoc(i)) + (cocent2(4)*(x_elevLoc(i)^2)) + (cocent2(5)*x_elevLoc(i)*y_elevLoc(i)) + (cocent2(6)*(y_elevLoc(i)^2))
+    elev_3(i) = cocent3(1)+(cocent3(2)*x_elevLoc(i)) +(cocent3(3)*y_elevLoc(i)) + (cocent3(4)*(x_elevLoc(i)^2)) +(cocent3(5)*x_elevLoc(i)*y_elevLoc(i)) + (cocent3(6)*(y_elevLoc(i)^2))+(cocent3(7)*(x_elevLoc(i)^3))+(cocent3(8)*(x_elevLoc(i)^2)*y_elevLoc(i)) + (cocent3(9)*x_elevLoc(i)*(y_elevLoc(i)^2))+(cocent3(10)*(y_elevLoc(i)^3))
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+ans =
+
+    'A'
+
+
+elev_2 =
+
+   1.3010e+16
+
+
+elev_3 =
+
+   5.0506e+25
+
+
+ans =
+
+    'B'
+
+
+elev_2 =
+
+   1.0e+16 *
+
+    1.3010    2.0029
+
+
+elev_3 =
+
+   1.0e+26 *
+
+    0.5051    1.0250
+
+
+ans =
+
+    'C'
+
+
+elev_2 =
+
+   1.0e+16 *
+
+    1.3010    2.0029    1.4273
+
+
+elev_3 =
+
+   1.0e+26 *
+
+    0.5051    1.0250    0.4787
+
+</pre><h2 id="15">Visualize 1</h2><pre class="codeinput">figure(1)
+PlanimetricPlot = scatter(xi,yi,zi);
+hold <span class="string">on</span>
+title(<span class="string">'Plainmetric Distribution of the Given Elevation Points'</span>)
+xlabel(<span class="string">'X (m)'</span>)
+ylabel(<span class="string">'Y (m)'</span>)
+</pre><img vspace="5" hspace="5" src="lab3_01.png" alt=""> <h2 id="16">Visualize 2</h2><pre class="codeinput">figure;
+stem3(xi, yi, zi)
+grid <span class="string">on</span>
+xv = linspace(min(xi), max(xi), 20);
+yv = linspace(min(yi), max(yi), 20);
+[X,Y] = meshgrid(xv, yv);
+Z = griddata(xi,yi,zi,X,Y);
+<span class="comment">%figure(2)</span>
+sc = surfc(X, Y, Z);
+grid <span class="string">on</span>
+set(gca, <span class="string">'ZLim'</span>,[0 100])
+shading <span class="string">interp</span>
+zlim([200,300])
+title(<span class="string">'Original Trend Surface'</span>)
+xlabel(<span class="string">'X (m)'</span>)
+ylabel(<span class="string">'Y (m)'</span>)
+zlabel(<span class="string">'Z (m)'</span>)
+</pre><img vspace="5" hspace="5" src="lab3_02.png" alt=""> <h2 id="17">Visualize 3</h2><pre class="codeinput">figure;
+stem3(xi, yi, Xhat2)
+grid <span class="string">on</span>
+xv = linspace(min(xi), max(xi), 20);
+yv = linspace(min(yi), max(yi), 20);
+[X,Y] = meshgrid(xv, yv);
+Z = griddata(xi,yi,Xhat2,X,Y);
+sc = surfc(X, Y, Z);
+grid <span class="string">on</span>
+set(gca, <span class="string">'ZLim'</span>,[0 100])
+shading <span class="string">interp</span>
+zlim([200,300])
+title(<span class="string">'Trend Surface: 2nd order'</span>)
+xlabel(<span class="string">'X (m)'</span>)
+ylabel(<span class="string">'Y (m)'</span>)
+zlabel(<span class="string">'Z (m)'</span>)
+</pre><img vspace="5" hspace="5" src="lab3_03.png" alt=""> <h2 id="18">Visualize 4</h2><pre class="codeinput">figure;
+stem3(xi, yi, Xhat3)
+grid <span class="string">on</span>
+xv = linspace(min(xi), max(xi), 20);
+yv = linspace(min(yi), max(yi), 20);
+[X,Y] = meshgrid(xv, yv);
+Z = griddata(xi,yi,Xhat3,X,Y);
+sc = surfc(X, Y, Z);
+grid <span class="string">on</span>
+set(gca, <span class="string">'ZLim'</span>,[0 100])
+zlim([200,300])
+title(<span class="string">'Trend Surface: 3rd order'</span>)
+xlabel(<span class="string">'X (m)'</span>)
+ylabel(<span class="string">'Y (m)'</span>)
+zlabel(<span class="string">'Z (m)'</span>)
+</pre><img vspace="5" hspace="5" src="lab3_04.png" alt=""> <h2 id="19">Adjustment</h2><pre class="codeinput"><span class="keyword">function</span> [X, L, R,apost] = LnrPrmtrcLSA(l,A)
+    P = diag(ones (length(l),1));
+    X =  inv(A'*P*A)*A'*inv(P)*l;
+    L =  A*X;
+    R =  l - L;
+    dof =  length(L) - length(X);
+    apost = (R'*P*R)/dof;
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Warning: Matrix is close to singular or badly scaled. Results may be inaccurate.
+RCOND =  2.633543e-19. 
+
+X2 =
+
+  194.6906
+    0.0118
+    0.0047
+   -0.0000
+    0.0000
+   -0.0000
+
+
+L2 =
+
+  243.1072
+  243.2529
+  243.3573
+  244.8777
+  243.9520
+  244.3923
+  245.1763
+  243.7348
+  239.2060
+  242.2763
+  238.7272
+  235.8783
+  233.5853
+  236.5827
+  234.1854
+  232.3326
+  229.5104
+  230.6625
+  239.7357
+  231.4345
+  234.4644
+  238.5647
+  238.1983
+  240.1014
+  239.7390
+  234.2283
+  231.3699
+  235.6239
+  233.6814
+  233.5617
+  230.0470
+  234.9074
+  231.6603
+  232.3263
+  236.8142
+  230.5629
+  235.3892
+  235.4018
+  237.4865
+  231.5911
+  235.1433
+  242.4939
+  239.2563
+  237.1428
+  241.4263
+  240.6070
+  236.2149
+  238.3605
+  243.2260
+  242.1282
+  243.4427
+  243.9884
+  241.0884
+  244.8735
+  229.8794
+  231.0207
+  233.8380
+  236.0940
+  236.5443
+  235.5132
+  237.4154
+  238.8069
+  240.5965
+  241.4998
+  242.9120
+  240.0158
+  242.8401
+  243.9075
+  244.9373
+  245.3144
+  245.5406
+  240.6540
+  240.8994
+  242.7130
+  244.1384
+  243.7095
+  242.6713
+  241.5970
+  244.3856
+  245.2888
+  245.7291
+  245.6863
+  244.5263
+  242.8759
+  239.3819
+  241.8428
+  243.1905
+  242.8865
+  244.4394
+  240.7952
+  237.3761
+  236.6578
+
+
+R2 =
+
+    1.2928
+  -14.7529
+    2.8427
+   -2.5777
+   25.9480
+   -2.3923
+   -0.2763
+   -3.0348
+   14.0940
+   12.9237
+   -1.9272
+   12.5217
+  -20.2853
+    1.0173
+    7.5146
+    4.7674
+   -2.9104
+    2.2375
+   -4.1357
+    6.3655
+   -9.8644
+    1.5353
+    8.2017
+    0.2986
+   -3.1390
+    0.4717
+    3.6301
+  -12.1239
+   -1.3814
+   -8.9617
+    2.3530
+   -0.1074
+   -6.9603
+    1.3737
+   -1.3142
+    9.7371
+   15.7108
+    1.7982
+   -3.1865
+  -27.2911
+   -0.5433
+    2.4061
+   -1.6563
+   12.9572
+    9.4737
+   -3.3070
+   12.6851
+  -23.4605
+   -3.8260
+    1.9718
+   -3.8427
+   10.2116
+   -5.5884
+   -1.7735
+    8.2206
+    3.7793
+   -9.5380
+    0.2060
+   10.2557
+   -1.7132
+    0.8846
+   -4.4069
+    8.9035
+   -2.1998
+    0.3880
+  -16.7158
+   -2.4401
+    8.7925
+   -3.0373
+    6.1856
+   -1.9406
+   -4.8540
+   19.5006
+   -1.0130
+    7.2616
+   -1.9095
+  -10.2713
+   -1.7970
+  -10.7856
+   -2.3888
+   -1.6291
+   -1.1863
+   -6.7263
+    2.5241
+    0.5181
+  -18.1428
+   -1.4905
+   -9.5865
+    5.4606
+    7.9048
+    0.5239
+    6.7422
+
+
+apost2 =
+
+   79.7394
+
+Warning: Matrix is close to singular or badly scaled. Results may be inaccurate.
+RCOND =  1.642374e-28. 
+
+X3 =
+
+  303.0618
+   -0.0315
+   -0.0119
+    0.0000
+    0.0000
+    0.0000
+   -0.0000
+   -0.0000
+   -0.0000
+   -0.0000
+
+
+L3 =
+
+  242.6014
+  243.2353
+  243.0980
+  245.9135
+  244.2911
+  245.5194
+  245.7672
+  244.8190
+  239.4709
+  242.8134
+  238.7279
+  235.5341
+  233.1202
+  236.5989
+  234.1442
+  232.5955
+  229.7954
+  232.2551
+  238.1598
+  232.1407
+  233.9527
+  236.2428
+  235.9546
+  237.5156
+  237.2368
+  234.1409
+  233.4159
+  234.5945
+  233.4147
+  233.3533
+  231.4642
+  234.2897
+  232.3242
+  234.4388
+  235.8245
+  231.6820
+  234.6901
+  235.0299
+  237.5809
+  231.8121
+  235.5062
+  240.4675
+  238.7919
+  236.3598
+  241.0658
+  238.2467
+  235.5066
+  238.0926
+  243.9744
+  241.7751
+  244.2647
+  244.2922
+  239.3833
+  246.2529
+  229.7076
+  231.9668
+  232.9614
+  234.0198
+  237.3126
+  234.4598
+  237.3018
+  239.7760
+  240.9393
+  241.7917
+  242.8723
+  237.5495
+  242.9094
+  244.5557
+  246.2500
+  246.6096
+  246.6348
+  238.8515
+  240.9162
+  243.7201
+  245.4319
+  244.6017
+  243.5517
+  241.3634
+  244.7091
+  246.3929
+  246.5455
+  246.1949
+  245.0614
+  242.6145
+  238.4615
+  241.8209
+  242.6372
+  241.6008
+  242.9909
+  241.2844
+  240.1648
+  239.1281
+
+
+R3 =
+
+    1.7986
+  -14.7353
+    3.1020
+   -3.6135
+   25.6089
+   -3.5194
+   -0.8672
+   -4.1190
+   13.8291
+   12.3866
+   -1.9279
+   12.8659
+  -19.8202
+    1.0011
+    7.5558
+    4.5045
+   -3.1954
+    0.6449
+   -2.5598
+    5.6593
+   -9.3527
+    3.8572
+   10.4454
+    2.8844
+   -0.6368
+    0.5591
+    1.5841
+  -11.0945
+   -1.1147
+   -8.7533
+    0.9358
+    0.5103
+   -7.6242
+   -0.7388
+   -0.3245
+    8.6180
+   16.4099
+    2.1701
+   -3.2809
+  -27.5121
+   -0.9062
+    4.4325
+   -1.1919
+   13.7402
+    9.8342
+   -0.9467
+   13.3934
+  -23.1926
+   -4.5744
+    2.3249
+   -4.6647
+    9.9078
+   -3.8833
+   -3.1529
+    8.3924
+    2.8332
+   -8.6614
+    2.2802
+    9.4874
+   -0.6598
+    0.9982
+   -5.3760
+    8.5607
+   -2.4917
+    0.4277
+  -14.2495
+   -2.5094
+    8.1443
+   -4.3500
+    4.8904
+   -3.0348
+   -3.0515
+   19.4838
+   -2.0201
+    5.9681
+   -2.8017
+  -11.1517
+   -1.5634
+  -11.1091
+   -3.4929
+   -2.4455
+   -1.6949
+   -7.2614
+    2.7855
+    1.4385
+  -18.1209
+   -0.9372
+   -8.3008
+    6.9091
+    7.4156
+   -2.2648
+    4.2719
+
+
+apost3 =
+
+   82.2067
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% ESSE4640 DTM Lab 3 
+clc
+clear all
+%% Read Data
+% read file
+data = xlsread('lab3esse4640');
+%%Initial (Given) Coordinates
+xi = data(:,1);
+yi = data(:,2);
+zi = data(:,3);
+
+
+%% Generate 2nd and 3rd order trend surfaces
+% Initial coeffiecnt values 
+n = 92;
+x = sum(xi);
+y = sum(yi);
+z = sum(zi);
+% Estimating the corresponding polynomial coefficient
+X = xi;
+Y = yi;
+Z = zi;
+xy = xi.* yi;
+xz = xi.* zi;
+yz = yi.* zi;
+for i = 2 : 8
+    X(:,i) = x.^i;
+    Y(:,i) = y.^i;
+end
+for i = 1 : 8
+    SumX(i) = sum(X(:,i));
+    SumY(i) = sum(Y(:,i));
+end
+xySum = sum(xy);
+xzSum = sum(xz);
+yzSum = sum(yz);
+
+% Estimate using the normalized coordinates
+Xmx = max(xi); Xmn = min(xi);
+Ymx = max(yi); Ymn = min(yi);
+Zmx = max(zi); Zmn = min(zi);
+
+Xn = (xi-Xmn)/(Xmx-Xmn);
+Yn = (yi-Xmn)/(Ymx-Ymn);
+SumZn(:,1) = (zi-Xmn)/(Zmx-Zmn);
+xyn = Xn.* Yn;
+xzn = Xn.* SumZn(:,1);
+yzn = Yn.* SumZn(:,1);
+for i = 2 : 8
+    Xn(:,i) = Xn(i,1).^i;
+    Yn(:,i) = Yn(i,1).^i;
+end
+for i = 1 : 8
+    SumXn(i) = sum(Xn(:,i));
+    SumYn(i) = sum(Yn(:,i));
+end
+xynSum = sum(xyn);
+xznSum = sum(xzn);
+yznSum = sum(yzn);
+SumZn = sum(SumZn(:,1));
+
+% Estimate using the centroid coordinates
+Xcent = xi/n;
+Ycent = yi/n;
+Zcent = zi/n;
+SumXcent = sum(Xcent);
+SumYcent = sum(Ycent);
+
+for i = 2 : 8
+    Xcent(:,i) = x.^i;
+    Ycent(:,i) = y.^i;
+end
+
+xycent = xi.* yi;
+xzcent = xi.* zi;
+yzcent = yi.* zi;
+
+for i = 1 : 8
+    SumXcent(i) = sum(Xcent(:,i));
+    SumYcent(i) = sum(Ycent(:,i));
+end
+xycentSum = sum(xycent);
+xzcentSum = sum(xzcent);
+yzcentSum = sum(yzcent);
+SumZcent = sum(zi);
+
+%% Normalized First Order Polynomial Equation
+% Design Matrix
+An = [n   SumXn(:,1)      SumYn(:,1);
+     SumXn(:,1) SumXn(2) xynSum;
+     SumYn(:,1)  xynSum  SumYn(2)];
+Zon = [SumZn xznSum yznSum];
+con = An/Zon
+condn = abs (max(con)/min(con))
+ 
+%% Centroid First Order Polynomial Equation
+% Design Matrix
+Acent = [n     SumXcent(:,1)       SumYcent(:,1);
+         SumXcent(:,1)  SumXcent(2) xycentSum;
+         SumYcent(:,1)  xycentSum  SumYcent(2)];
+Zocent = [SumZcent xzcentSum yzcentSum];
+cocent = Acent/Zocent
+condcent = abs (max(cocent/min(cocent)));
+ 
+%% Second Order Polynomial Equation
+% Design Matrix
+A2 = [n         x           y           SumX(2)         xySum           SumY(2);
+      x         SumX(2)     xySum       SumX(3)         SumX(2)*y       SumY(2)*x;
+      y         xySum       SumY(2)     SumX(2)*y       SumY(2)*x       SumY(3);
+   SumX(2)      SumX(3)     SumX(2)*y   SumX(4)         SumX(3)*y       SumX(2)*SumY(2);
+   xySum        SumX(2)*y   SumY(2)*x   SumX(3)*y       SumX(2)*SumY(2) SumY(3)*x;
+   SumY(2)      SumY(2)*x   SumY(3)     SumX(2)*SumY(2) SumY(3)*x       SumY(4)];
+
+Zo2 = [z z*x z*y SumX(2)*z  xySum*z SumY(2)*z];
+co2 = A2/Zo2; 
+cond2 = abs (max(co2)/min(co2));
+
+%% Normalized Second Order Polynomial Equation
+% Design Matrix
+An2 = [n    SumXn(:,1)    SumYn(:,1)       SumXn(2)     xynSum      SumYn(2);
+      SumXn(:,1)   SumXn(2) xynSum    SumXn(3)    SumXn(2)*SumYn(:,1)    SumY(2)*SumXn(:,1);
+      SumYn(:,1)    xynSum  SumYn(2) SumXn(2)*SumYn(:,1)   SumY(2)*SumXn(:,1)    SumYn(3);
+   SumXn(2) SumXn(3) SumXn(2)*SumYn(:,1) SumXn(4) SumXn(3)*SumYn(:,1)  SumXn(2)*SumYn(2);
+   xynSum   SumXn(2)*SumYn(:,1)  SumYn(2)*SumXn(:,1) SumXn(3)*SumYn(:,1) SumXn(2)*SumYn(2) SumYn(3)*SumXn(:,1);
+   SumYn(2) SumYn(2)*SumXn(:,1)  SumYn(3) SumXn(2)*SumYn(2) SumYn(3)*SumXn(:,1) SumYn(4)];
+Zon2 = [SumZn(:,1) SumZn(:,1)*SumXn(:,1) SumZn(:,1)*SumYn(:,1) SumXn(2)*SumZn(:,1)  xynSum*SumZn(:,1) SumYn(2)*SumZn(:,1)];
+con2 = An2/Zon2; 
+condn2 = abs (max(con2)/min(con2));
+ 
+%% Centroid Second   Order Polynomial Equation
+% Design Matrix
+Acent2 = [n             SumXcent(:,1)               SumYcent(:,1)               SumXcent(2)                 xycentSum                   SumYcent(2);
+         SumXcent(:,1)  SumXcent(2)                 xycentSum                   SumXcent(3)                 SumXcent(2)*SumYcent(:,1)   SumYcent(2)*SumXn(:,1);
+         SumYcent(:,1)  xycentSum                   SumYcent(2)                 SumXcent(2)*SumYcent(:,1)   SumYcent(2)*SumXcent(:,1)   SumYcent(3);
+         SumXcent(2)    SumXcent(3)                 SumXcent(2)*SumYcent(:,1)   SumXcent(4)                 SumXcent(3)*SumYcent(:,1)   SumXcent(2)*SumYcent(2);
+         xycentSum      SumXcent(2)*SumYcent(:,1)   SumYcent(2)*SumXcent(:,1)   SumXcent(3)*SumYcent(:,1)   SumXcent(2)*SumYcent(2)     SumYcent(3)*SumXcent(:,1);
+         SumYcent(2)    SumYcent(2)*SumXcent(:,1)   SumYcent(3)                 SumXcent(2)*SumYcent(2)     SumYcent(3)*SumXcent(:,1)   SumYcent(4)];
+
+Zocent2 = [SumZcent(:,1) SumZcent(:,1)*SumXcent(:,1) SumZcent(:,1)*SumYcent(:,1) SumXcent(2)*SumZcent(:,1)  xycentSum*SumZcent(:,1) SumYcent(2)*SumZcent(:,1)];
+cocent2 = Acent2/Zocent2
+condcent2 = abs (max(cocent2/min(cocent2)));
+ 
+
+%% Third Order Polynomial Equation
+%Design Matrix
+A3 = [ n           x               y               SumX(2)              xySum          SumY(2)          SumX(3)          SumX(2)*y        x*SumY(2)        SumY(3);  
+        x           SumX(2)          xySum          SumX(3)              SumX(2)*y        x*SumY(2)        SumX(4)          SumX(3)*y        SumX(2)*SumY(2)   x*SumY(3) ;
+        y           xySum          SumY(2)          SumX(2)*y            x*SumY(2)        SumY(3)          SumX(3)*y        SumX(2)*SumY(2)   x*SumY(3)        SumY(4) ;
+        SumX(2)      SumX(3)          SumX(2)*y        SumX(4)              SumX(3)*y        SumX(2)*SumY(2)   SumX(5)          SumX(4)*y        SumX(3)*SumY(2)   SumX(2)*SumY(3) ;
+        xySum      SumX(2)*y        x*SumY(2)        SumX(3)*y            SumX(2)*SumY(2)   x*SumY(3)        SumX(4)*y        SumX(3)*SumY(2)   SumX(2)*SumY(3)   x*SumY(4);
+        SumY(2)      x*SumY(2)        SumY(3)          SumX(2)*SumY(2)       x*SumY(3)        SumY(4)          SumX(3)*SumY(2)   SumX(2)*SumY(3)   x*SumY(4)        SumY(5);
+        SumX(3)      SumX(4)          SumX(3)*y        SumX(5)              SumX(4)*y        SumX(3)*SumY(2)   SumX(6)          SumX(5)*y        SumX(4)*SumY(2)   SumX(3)*SumY(3);
+        SumX(2)*y    SumX(3)*SumY(2)   SumX(2)*SumY(2)   SumX(4)*y            SumX(3)*SumY(2)   SumX(2)*SumY(3)   SumX(5)*y        SumX(4)*SumY(2)   SumX(3)*SumY(3)   SumX(2)*SumY(4);
+        x*SumY(2)    SumX(2)*SumY(2)   x*SumY(3)        SumX(3)*SumY(2)       SumX(2)*SumY(3)   x*SumY(4)        SumX(4)*SumY(2)   SumX(3)*SumY(3)   SumX(2)*SumY(4)   x*SumY(5);
+        SumY(3)      x*SumY(3)        SumY(4)          SumX(2)*SumY(3)       x*SumY(4)        SumY(5)          SumX(3)*SumY(3)   SumX(2)*SumY(4)   x*SumY(5)        SumY(6)];
+Zo3 = [z z*x y*z SumX(2)*z xySum*z SumY(2)*z SumX(3)*z SumX(2)*y*z x*SumY(2)*z SumY(3)*z];    
+co3 = A3/Zo3;
+cond3 = abs(max(co3)/min(co3));
+
+%% Normalized Third Order Polynomial Equation
+%Design Matrix
+An3 = [ n           SumXn(:,1)               SumYn(:,1)               SumXn(2)              xynSum          SumYn(2)          SumXn(3)          SumXn(2)*SumYn(:,1)        SumXn(:,1)*SumYn(2)        SumYn(3);  
+        SumXn(:,1)           SumXn(2)          xynSum          SumXn(3)              SumXn(2)*SumYn(:,1)        SumXn(:,1)*SumYn(2)        SumXn(4)          SumXn(3)*SumYn(:,1)        SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3) ;
+        SumYn(:,1)           xynSum          SumYn(2)          SumXn(2)*SumYn(:,1)            SumXn(:,1)*SumYn(2)        SumYn(3)          SumXn(3)*SumYn(:,1)        SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3)        SumYn(4) ;
+        SumXn(2)      SumXn(3)          SumXn(2)*SumYn(:,1)        SumXn(4)              SumXn(3)*SumYn(:,1)        SumXn(2)*SumYn(2)   SumXn(5)          SumXn(4)*SumYn(:,1)        SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3) ;
+        xynSum      SumXn(2)*SumYn(:,1)        SumXn(:,1)*SumYn(2)        SumXn(3)*SumYn(:,1)            SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3)        SumXn(4)*SumYn(:,1)        SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3)   SumXn(:,1)*SumYn(4);
+        SumYn(2)      SumXn(:,1)*SumYn(2)        SumYn(3)          SumXn(2)*SumYn(2)       SumXn(:,1)*SumYn(3)        SumYn(4)          SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3)   SumXn(:,1)*SumYn(4)        SumYn(5);
+        SumXn(3)      SumXn(4)          SumXn(3)*SumYn(:,1)        SumXn(5)              SumXn(4)*SumYn(:,1)        SumXn(3)*SumYn(2)   SumXn(6)          SumXn(5)*SumYn(:,1)        SumXn(4)*SumYn(2)   SumXn(3)*SumYn(3);
+        SumXn(2)*SumYn(:,1)    SumXn(3)*SumYn(2)   SumXn(2)*SumYn(2)   SumXn(4)*SumYn(:,1)            SumXn(3)*SumYn(2)   SumXn(2)*SumYn(3)   SumXn(5)*SumYn(:,1)        SumXn(4)*SumYn(2)   SumXn(3)*SumYn(3)   SumXn(2)*SumYn(4);
+        SumXn(:,1)*SumYn(2)    SumXn(2)*SumYn(2)   SumXn(:,1)*SumYn(3)        SumXn(3)*SumYn(2)       SumXn(2)*SumYn(3)   SumXn(:,1)*SumYn(4)        SumXn(4)*SumYn(2)   SumXn(3)*SumYn(3)   SumXn(2)*SumYn(4)   SumXn(:,1)*SumYn(5);
+        SumYn(3)      SumXn(:,1)*SumYn(3)        SumYn(4)          SumXn(2)*SumYn(3)       SumXn(:,1)*SumYn(4)        SumYn(5)          SumXn(3)*SumYn(3)   SumXn(2)*SumYn(4)   SumXn(:,1)*SumYn(5)        SumYn(6)];
+Zon3 = [SumZn(:,1) SumZn(:,1)*SumXn(:,1) SumYn(:,1)*SumZn(:,1) SumXn(2)*SumZn(:,1) xynSum*SumZn(:,1) SumYn(2)*SumZn(:,1) SumXn(3)*SumZn(:,1) SumXn(2)*SumYn(:,1)*SumZn(:,1) SumXn(:,1)*SumYn(2)*SumZn(:,1) SumYn(3)*SumZn(:,1)];    
+con3 = An3/Zon3;
+condn3 = abs(max(con3)/min(con3));
+
+%% Centroid Third Order Polynomial Equation
+%Design Matrix
+Acent3 = [ n           SumXcent(:,1)               SumYcent(:,1)               SumXcent(2)              xycentSum          SumYcent(2)          SumXcent(3)          SumXcent(2)*SumYcent(:,1)        SumXcent(:,1)*SumYcent(2)        SumYcent(3);  
+        SumXcent(:,1)           SumXcent(2)          xycentSum          SumXcent(3)              SumXcent(2)*SumYcent(:,1)        SumXcent(:,1)*SumYcent(2)        SumXcent(4)          SumXcent(3)*SumYcent(:,1)        SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3) ;
+        SumYcent(:,1)           xycentSum          SumYcent(2)          SumXcent(2)*SumYcent(:,1)            SumXcent(:,1)*SumYcent(2)        SumYcent(3)          SumXcent(3)*SumYcent(:,1)        SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3)        SumYcent(4) ;
+        SumXcent(2)      SumXcent(3)          SumXcent(2)*SumYcent(:,1)        SumXcent(4)              SumXcent(3)*SumYcent(:,1)        SumXcent(2)*SumYcent(2)   SumXcent(5)          SumXcent(4)*SumYcent(:,1)        SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3) ;
+        xycentSum      SumXcent(2)*SumYcent(:,1)        SumXcent(:,1)*SumYcent(2)        SumXcent(3)*SumYcent(:,1)            SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3)        SumXcent(4)*SumYcent(:,1)        SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3)   SumXcent(:,1)*SumYcent(4);
+        SumYcent(2)      SumXcent(:,1)*SumYcent(2)        SumYcent(3)          SumXcent(2)*SumYcent(2)       SumXcent(:,1)*SumYcent(3)        SumYcent(4)          SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3)   SumXcent(:,1)*SumYcent(4)        SumYcent(5);
+        SumXcent(3)      SumXcent(4)          SumXcent(3)*SumYcent(:,1)        SumXcent(5)              SumXcent(4)*SumYcent(:,1)        SumXcent(3)*SumYcent(2)   SumXcent(6)          SumXcent(5)*SumYcent(:,1)        SumXcent(4)*SumYcent(2)   SumXcent(3)*SumYcent(3);
+        SumXcent(2)*SumYcent(:,1)    SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(2)   SumXcent(4)*SumYcent(:,1)            SumXcent(3)*SumYcent(2)   SumXcent(2)*SumYcent(3)   SumXcent(5)*SumYcent(:,1)        SumXcent(4)*SumYcent(2)   SumXcent(3)*SumYcent(3)   SumXcent(2)*SumYcent(4);
+        SumXcent(:,1)*SumYcent(2)    SumXcent(2)*SumYcent(2)   SumXcent(:,1)*SumYcent(3)        SumXcent(3)*SumYcent(2)       SumXcent(2)*SumYcent(3)   SumXcent(:,1)*SumYcent(4)        SumXcent(4)*SumYcent(2)   SumXcent(3)*SumYcent(3)   SumXcent(2)*SumYcent(4)   SumXcent(:,1)*SumYcent(5);
+        SumYcent(3)      SumXcent(:,1)*SumYcent(3)        SumYcent(4)          SumXcent(2)*SumYcent(3)       SumXcent(:,1)*SumYcent(4)        SumYcent(5)          SumXcent(3)*SumYcent(3)   SumXcent(2)*SumYcent(4)   SumXcent(:,1)*SumYcent(5)        SumYcent(6)];
+Zocent3 = [SumZcent(:,1) SumZcent(:,1)*SumXcent(:,1) SumYcent(:,1)*SumZcent(:,1) SumXcent(2)*SumZcent(:,1) xycentSum*SumZcent(:,1) SumYcent(2)*SumZcent(:,1) SumXcent(3)*SumZcent(:,1) SumXcent(2)*SumYcent(:,1)*SumZcent(:,1) SumXcent(:,1)*SumYcent(2)*SumZcent(:,1) SumYcent(3)*SumZcent(:,1)];    
+cocent3 = Acent3/Zocent3;
+condcent3 = abs(max(cocent3)/min(cocent3));
+
+
+%Second order Design Matrix
+for i=1:1:92
+    A2(i,1) = (1);
+    A2(i,2) = xi(i);
+    A2(i,3) = yi(i);
+    A2(i,4)= xi(i)^2;
+    A2(i,5) = xi(i)*yi(i);
+    A2(i,6)= yi(i)^2;
+end
+[X2, L2, R2, apost2] = LnrPrmtrcLSA(zi,A2)
+
+%Third Order Design Matrix
+for i=1:1:92
+    A3(i,1) = (1);
+    A3(i,2) = xi(i);
+    A3(i,3) = yi(i);
+    A3(i,4)= xi(i)^2;
+    A3(i,5) = xi(i)*yi(i);
+    A3(i,6)= yi(i)^2;
+    A3(i,7)= xi(i)^3;
+    A3(i,8)= xi(i)^2*yi(i);
+    A3(i,9)= yi(i)^2*xi(i);
+    A3(i,10)= yi(i)^3;
+end
+[X3, L3, R3, apost3] = LnrPrmtrcLSA(zi,A3)
+%% Estimate Accuracy
+apost2; apost3;
+
+%% Elevations and Residuals
+
+
+%%Second order
+for i=1:1:92
+    A2(i,1) = (1);
+    A2(i,2) = xi(i);
+    A2(i,3) = yi(i);
+    A2(i,4)= xi(i)^2;
+    A2(i,5) = xi(i)*yi(i);
+    A2(i,6)= yi(i)^2;
+end
+p1 = inv(transpose(A2)*A2);
+p2 = transpose(A2);
+Xhat2 = A2*p1*p2*zi;
+
+
+%Second Order
+Mean_R2 = mean(R2)
+Max_R2 = max(R2)
+Min_R2 = min(R2)
+STD_R2 = std (R2)
+RMSE_R2 = sqrt(mean(((zi-Xhat2).^2)))
+
+%%Third Order
+for i=1:1:92
+    A3(i,1) = (1);
+    A3(i,2) = xi(i);
+    A3(i,3) = yi(i);
+    A3(i,4)= xi(i)^2;
+    A3(i,5) = xi(i)*yi(i);
+    A3(i,6)= yi(i)^2;
+    A3(i,7)= xi(i)^3;
+    A3(i,8)= xi(i)^2*yi(i);
+    A3(i,9)= yi(i)^2*xi(i);
+    A3(i,10)= yi(i)^3;
+end
+Xhat3 = A3*inv(transpose(A3)*A3)*transpose(A3)*zi;
+
+%Third Order
+Mean_R3 = mean(R3)
+Max_R3 = max(R3)
+Min_R3 = min(R3)
+STD_R3 = std (R3)
+RMSE_R3 = sqrt(mean(((zi-Xhat3).^2)))
+
+% Worthiness
+%%Second Order
+avg_Z = mean(zi);
+for i=1:1:92
+SST_or2(i) = sum((zi(i)-avg_Z)^2);
+SSR_or2(i) = sum ((Xhat2(i)-avg_Z)^2);
+SSD_or2(i) = sum((zi(i)-Xhat2(i))^2);
+end
+SST_o2 = sum(SST_or2)
+SSR_o2 = sum(SSR_or2)
+SSD_o2 = sum(SSD_or2)
+%Goodness-of-Fit
+R2 = SSR_o2/SST_o2
+nn = 92
+m = 6
+MST_o2 = SST_o2 / nn
+MSR_o2 = SSR_o2 / m
+MSD_o2 = SSD_o2 / (n-m)
+% Fstat
+F2_test = MSR_o2/MSD_o2
+%%Third Order
+for i=1:1:92
+SST_or3(i) = sum((zi(i)-avg_Z)^2);
+SSR_or3(i) = sum ((Xhat3(i)-avg_Z)^2);
+SSD_or3(i) = sum((zi(i)-Xhat3(i))^2);
+end
+SST_o3 = sum(SST_or3)
+SSR_o3 = sum(SSR_or3)
+SSD_o3 = sum(SSD_or3)
+% of Goodness-of-Fit
+R3 = SSR_o3/SST_o3
+n_3 = 92
+m_3 = 10
+MST_o3 = SST_o3 / n_3
+MSR_o3 = SSR_o3 / m_3
+MSD_o3 = SSD_o3 / (n_3-m_3)
+% Fstat
+F3_test = MSR_o3/MSD_o3
+
+%% Elevation 
+point = ['A','B','C'];
+x_elevLoc = [7000, 6350, 8800];
+y_elevLoc = [3500, 5500, 2400];
+for i = 1:3
+    point(i)
+    elev_2(i) = cocent2(1)+(cocent2(2)*x_elevLoc(i)) + (cocent2(3)*y_elevLoc(i)) + (cocent2(4)*(x_elevLoc(i)^2)) + (cocent2(5)*x_elevLoc(i)*y_elevLoc(i)) + (cocent2(6)*(y_elevLoc(i)^2))
+    elev_3(i) = cocent3(1)+(cocent3(2)*x_elevLoc(i)) +(cocent3(3)*y_elevLoc(i)) + (cocent3(4)*(x_elevLoc(i)^2)) +(cocent3(5)*x_elevLoc(i)*y_elevLoc(i)) + (cocent3(6)*(y_elevLoc(i)^2))+(cocent3(7)*(x_elevLoc(i)^3))+(cocent3(8)*(x_elevLoc(i)^2)*y_elevLoc(i)) + (cocent3(9)*x_elevLoc(i)*(y_elevLoc(i)^2))+(cocent3(10)*(y_elevLoc(i)^3))
+end
+   
+
+%% Visualize 1
+figure(1)  
+PlanimetricPlot = scatter(xi,yi,zi);
+hold on 
+title('Plainmetric Distribution of the Given Elevation Points') 
+xlabel('X (m)') 
+ylabel('Y (m)')
+
+%% Visualize 2
+figure;
+stem3(xi, yi, zi)
+grid on
+xv = linspace(min(xi), max(xi), 20);
+yv = linspace(min(yi), max(yi), 20);
+[X,Y] = meshgrid(xv, yv);
+Z = griddata(xi,yi,zi,X,Y);
+%figure(2)
+sc = surfc(X, Y, Z);
+grid on
+set(gca, 'ZLim',[0 100])
+shading interp
+zlim([200,300])
+title('Original Trend Surface') 
+xlabel('X (m)') 
+ylabel('Y (m)') 
+zlabel('Z (m)') 
+%% Visualize 3
+figure;
+stem3(xi, yi, Xhat2)
+grid on
+xv = linspace(min(xi), max(xi), 20);
+yv = linspace(min(yi), max(yi), 20);
+[X,Y] = meshgrid(xv, yv);
+Z = griddata(xi,yi,Xhat2,X,Y);
+sc = surfc(X, Y, Z);
+grid on
+set(gca, 'ZLim',[0 100])
+shading interp
+zlim([200,300])
+title('Trend Surface: 2nd order') 
+xlabel('X (m)') 
+ylabel('Y (m)') 
+zlabel('Z (m)') 
+%% Visualize 4
+figure;
+stem3(xi, yi, Xhat3)
+grid on
+xv = linspace(min(xi), max(xi), 20);
+yv = linspace(min(yi), max(yi), 20);
+[X,Y] = meshgrid(xv, yv);
+Z = griddata(xi,yi,Xhat3,X,Y);
+sc = surfc(X, Y, Z);
+grid on
+set(gca, 'ZLim',[0 100])
+zlim([200,300])
+title('Trend Surface: 3rd order') 
+xlabel('X (m)') 
+ylabel('Y (m)') 
+zlabel('Z (m)') 
+
+%% Adjustment
+function [X, L, R,apost] = LnrPrmtrcLSA(l,A)
+    P = diag(ones (length(l),1));
+    X =  inv(A'*P*A)*A'*inv(P)*l;
+    L =  A*X;
+    R =  l - L;
+    dof =  length(L) - length(X);
+    apost = (R'*P*R)/dof;
+end
+##### SOURCE END #####
+--></body></html>
